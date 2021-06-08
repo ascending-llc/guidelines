@@ -164,3 +164,75 @@ We normally setup four environment in each application, depending on the complex
 - **hotfix** please create branch **hotfix/{jira_ticket}** off *staging* branch and make PR for review when it is ready. Please make sure merge back to *test* at the end of life cycle.
 
 ## Analytics
+
+Please first obtain analytics requirement(excel) from project prior to the implementation. Analytics implemenation are consist of two part, mixpanel for all the actions tracking, google analytcis for vimeo analytics tracking.
+
+### mixpanel
+Please read the sdk documentation, it is also an [implementaion reference](https://developer.mixpanel.com/docs/javascript-full-api-reference)
+- **installation** scaffold project contains mixpanel dependency and library
+- **identify people** associate all the events with user
+
+```jsx
+
+      Mixpanel.alias(response.data.email);
+      Mixpanel.identify(response.data.email);
+      Mixpanel.people.set({
+          $first_name: response.data.first_name,
+          $last_name: response.data.last_name,
+          $email: response.data.email,
+          $title: response.data.title,
+          $state: response.data.state,
+          $city: response.data.city,
+          $cell_phone: response.data.cell_phone,
+          $company: response.data.company,
+          $device: deviceType()
+      });
+
+```
+
+- **path tracking** all path tracking should be in the routing.
+
+```jsx
+
+const Routes = () => {
+    const location = useLocation();
+    ...
+    React.useEffect(() => {
+        Mixpanel.track(window.location.pathname);
+        Mixpanel.register({path: window.location.pathname});
+
+```
+- **event tracking** track event title or name with properties for better reporting.
+```jsx
+
+//good 
+Mixpanel.track("Button Clicked", {"type":show,"title": title});
+
+//bad
+Mixpanel.track("Home Button Clicked");
+
+//good 
+Mixpanel.track("Download File", {"name": filename}});
+
+//bad
+Mixpanel.track("Download GCC Presentation File");
+```
+
+- **page duration** We need to track customer page duration for each page.
+
+```jsx
+
+React.useEffect(()=>{
+   
+     Mixpanel.time_event('Page Stay');
+     return () => {
+        Mixpanel.track("Page Stay",{"sponsor": company});
+     };
+},[])
+```
+
+### google analytics
+Google analytcis for vimeo analytics tracking, it has to be universal analytics,not latest google analytcis version. We implement that through google tag manager. Mostly developer only need to add tag from index.html
+
+- [**environments**](https://support.google.com/tagmanager/answer/6311518?hl=en)
+- [**lookup variable**](https://www.searchviu.com/en/lookup-tables-google-tag-manager/)
