@@ -16,9 +16,10 @@ This style guide is mostly based on [Airbnb](https://github.com/airbnb/javascrip
 
 ## Basic Rules
 
-- Copy&Paste with your mind, never just copy paste, make sure change the name and content according to each project. Remove unecessary code.
+- **Copy&Paste** with your mind, never just copy paste, make sure change the name and content according to each project. Remove unecessary code.
 - Always use JSX syntax.
-- Fix all the console error at the end of PR
+- **Console error** Fix all console error at the end of PR
+- **Debugger** Remove all the debugger at the end of PR
 
 ## Project Scaffold
 - We made a [scaffold project](https://github.com/ascending-llc/create-event-app) to bootstrap a standard reactjs project according to ASCENDING standard. Please use that to inialize a project, provide feedback for improvement.
