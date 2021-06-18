@@ -8,7 +8,7 @@ This guide is for backend devops engineer who is working on ADM projects with ex
   1. Check front codepipeline building script (node version, build:${env}, ....)
   1. Cloudfront error behaviour (403, 404) and https setting
 
-## Backend Codepipelie
+## Backend Codepipeline
 
   1. Check Git Repo and Owner in backend pipeline
   1. Check the ServiceRole for AWS::CodeBuild::Project, make sure you have all the permissions for resources
