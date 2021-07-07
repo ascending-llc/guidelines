@@ -169,6 +169,7 @@ We normally setup four environment in each application, depending on the complex
 Please first obtain analytics requirement(excel) from project prior to the implementation. Analytics implemenation are consist of two part, mixpanel for all the actions tracking, google analytcis for vimeo analytics tracking.
 
 ### mixpanel
+
 Please read the sdk documentation, it is also an [implementaion reference](https://developer.mixpanel.com/docs/javascript-full-api-reference)
 - **installation** scaffold project contains mixpanel dependency and library
 - **identify people** associate all the events with user
@@ -181,12 +182,13 @@ Please read the sdk documentation, it is also an [implementaion reference](https
           $first_name: response.data.first_name,
           $last_name: response.data.last_name,
           $email: response.data.email,
-          $title: response.data.title,
           $state: response.data.state,
           $city: response.data.city,
+          $region: reponse.data.region,
           $cell_phone: response.data.cell_phone,
           $company: response.data.company,
-          $device: deviceType()
+          $device: deviceType(),
+          $OS: OSType()
       });
 
 ```
@@ -204,10 +206,11 @@ const Routes = () => {
 
 ```
 - **event tracking** track event title or name with properties for better reporting.
+
 ```jsx
 
 //good 
-Mixpanel.track("Button Clicked", {"type":show,"title": title});
+Mixpanel.track("Button Clicked", {"type":show, "title": title});
 
 //bad
 Mixpanel.track("Home Button Clicked");
@@ -217,6 +220,27 @@ Mixpanel.track("Download File", {"name": filename}});
 
 //bad
 Mixpanel.track("Download GCC Presentation File");
+
+//good
+Mixpanel.track("LogIn", {"date": date}); // date format MM-DD-YYYY HH:mm:ss AM/PM
+
+//bad
+Mixpanel.track("LogIn Button Clicked");
+
+//good
+Mixpanel.track("LogOut", {"date": date}); // date format MM-DD-YYYY HH:mm:ss AM/PM
+
+//bad
+Mixpanel.track("LogOut Button Clicked");
+
+//good
+// When the user visits any page, the pageView event will be triggered 
+// and the current page path will be recorded. Every page needed to be tracked.
+Mixpanel.track("pageView", {"pagePath": path, "date": date}); // date format MM-DD-YYYY HH:mm:ss AM/PM
+
+//bad
+Mixpanel.track("/");
+
 ```
 
 - **page duration** We need to track customer page duration for each page.
@@ -224,16 +248,28 @@ Mixpanel.track("Download GCC Presentation File");
 ```jsx
 
 React.useEffect(()=>{
-   
-     Mixpanel.time_event('Page Stay');
-     return () => {
-        Mixpanel.track("Page Stay",{"sponsor": company});
-     };
+    // We need to track customer page duration for each page
+    Mixpanel.time_event('Page Stay');
+    return () => {
+      Mixpanel.track("Page Stay",{"sponsor": company, "path": path, "duration": duration});
+    };
 },[])
 ```
 
 ### google analytics
-Google analytcis for vimeo analytics tracking, it has to be universal analytics,not latest google analytcis version. We implement that through google tag manager. Mostly developer only need to add tag from index.html
+Google analytcis for vimeo analytics tracking, it has to be universal analytics, not latest google analytcis version. We implement that through google tag manager. Mostly developer only need to add tag from index.html
 
 - [**environments**](https://support.google.com/tagmanager/answer/6311518?hl=en)
 - [**lookup variable**](https://www.searchviu.com/en/lookup-tables-google-tag-manager/)
+
+- **video tracking** Information grab from vimeo which contains:
+    * video_id
+    * video_name
+    * video_status(load/playback progress)
+    * user_email
+    * page_path
+    * trigger_time
+
+- **active user tracking** Information retrived from Google Analytics which contains:
+    * active_user_amount
+    * active_page_path
