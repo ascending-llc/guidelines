@@ -188,8 +188,7 @@ Please read the sdk documentation, it is also an [implementaion reference](https
           $cell_phone: response.data.cell_phone,
           $company: response.data.company,
           $device: deviceType(),
-          $OS: OSType(),
-          $last_seen: reponse.data.last_seen
+          $OS: OSType()
       });
 
 ```
@@ -235,6 +234,8 @@ Mixpanel.track("LogOut", {"date": date}); // date format MM-DD-YYYY HH:mm:ss AM/
 Mixpanel.track("LogOut Button Clicked");
 
 //good
+// When the user visits any page, the pageView event will be triggered 
+// and the current page path will be recorded. Every page needed to be tracked.
 Mixpanel.track("pageView", {"pagePath": path, "date": date}); // date format MM-DD-YYYY HH:mm:ss AM/PM
 
 //bad
@@ -247,11 +248,11 @@ Mixpanel.track("/");
 ```jsx
 
 React.useEffect(()=>{
-   
-     Mixpanel.time_event('Page Stay');
-     return () => {
-        Mixpanel.track("Page Stay",{"sponsor": company, "path": path, "duration": duration});
-     };
+    // We need to track customer page duration for each page
+    Mixpanel.time_event('Page Stay');
+    return () => {
+      Mixpanel.track("Page Stay",{"sponsor": company, "path": path, "duration": duration});
+    };
 },[])
 ```
 
