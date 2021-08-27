@@ -1,4 +1,4 @@
-# Sharepoint Server Setup Guide
+# Sharepoint Server 2019
 
 Deploy guide for Sharepoint Single Farm Server 2019 in Windows Server 2019
 
@@ -24,3 +24,33 @@ Install software prerequisites first, then launch Sharepoint Server 2019 Setup, 
 * https://www.youtube.com/watch?v=yWVMhg1x__w&t=322s&ab_channel=DesertEngineer
 * https://sharepoint.handsontek.net/2021/08/03/install-sharepoint-subscription-edition-step-step-hyper-v-part-1-5/
 
+# Sharepoint Online
+
+Instructions and practices for Sharepoint Online
+
+Requirements: Windows Online / Power Apps / Power Automate
+
+## Power Apps
+We are using Sharepoint as a data source for Power Apps (SQL and Excel also works as a data source).
+
+1, Create a list / form / document in Sharepoint, and select `Create an App` from the Power Apps dropdown in the navigation bar.   
+
+2, Power Apps will initialize the layout, but you can customize the app anyway you like. 
+
+3, On the left-hand side you have the tree view of the app, when an element is selected in the tree view, you can check the properties  
+on the left-hand side panel and play with it
+
+## Power Automate
+
+Power Automate enables us to create various workflows with different Microsoft Services.
+
+1, Create a Sharepoint resource (page / list / form) to work with. 
+
+2, Select `create a flow` from the Power Automate dropdown menu, choose a template flow to work with or create your own flow from scratch
+
+3, Enter Sharepoint url and your resource name, then customizer your workflow the way you like:  
+   sending email notification, requesting approvals and save attachment etc.
+
+## Power BI
+
+Power BI provides interactive visualizations and immersive dashboards for your Sharepoint resources. 
